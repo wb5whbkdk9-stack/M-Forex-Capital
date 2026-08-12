@@ -20,7 +20,6 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
     { name: 'Sade Baare', href: '#about' },
     { name: 'Ki Sikhange?', href: '#learn' },
     { name: 'Roadmap', href: '#roadmap' },
-    { name: 'Resources', href: '#resources' },
     { name: 'Community', href: '#community' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },

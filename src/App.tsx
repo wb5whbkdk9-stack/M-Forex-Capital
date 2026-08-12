@@ -17,7 +17,6 @@ import { LearnCards } from './components/LearnCards';
 import { CandleLab } from './components/CandleLab';
 import { ChartChallenge } from './components/ChartChallenge';
 import { LiveMarket } from './components/LiveMarket';
-import { ResourceLibrary } from './components/ResourceLibrary';
 import { CommunitySection } from './components/CommunitySection';
 import { Roadmap } from './components/Roadmap';
 import { RiskCalculator } from './components/RiskCalculator';
@@ -96,7 +95,6 @@ export default function App() {
         
         <AILearningPreview />
         
-        <ResourceLibrary onOpenAI={() => document.querySelector<HTMLButtonElement>('.fixed.bottom-6.right-6')?.click()} />
         
         <CommunityCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
         

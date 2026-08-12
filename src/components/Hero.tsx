@@ -73,10 +73,10 @@ export function Hero({ onOpenCommunity }: { onOpenCommunity: () => void }) {
           </button>
           
           <a 
-            href="#resources"
+            href="#learn"
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-brand-card hover:bg-slate-800/80 border border-gold-500/30 text-white font-bold rounded-xl transition-all hover:border-gold-500 text-lg uppercase tracking-wide shadow-lg"
           >
-            <BookOpen className="w-5 h-5 text-gold-500" /> EXPLORE FREE RESOURCES
+            <BookOpen className="w-5 h-5 text-gold-500" /> START LEARNING
           </a>
         </motion.div>
         

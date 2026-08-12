@@ -29,9 +29,7 @@ export function WhatYouWillLearn() {
               </div>
               <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
               <p className="text-slate-400 mb-6">{item.desc}</p>
-              <a href="#resources" className="text-sm font-bold text-gold-500 hover:text-gold-400 flex items-center gap-1 uppercase tracking-wider">
-                Learn More <ArrowRight className="w-4 h-4" />
-              </a>
+              
             </div>
           ))}
         </div>
@@ -83,7 +81,7 @@ export function BeginnerSection() {
           <p className="text-lg text-slate-300 mb-8 leading-relaxed">
             Je tuhanu forex bare kuch vi nahi pata, tension nahi. Learning basics ton start kiti ja sakdi hai.
           </p>
-          <a href="#resources" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-200 text-brand-black font-bold rounded-xl transition-all text-sm uppercase tracking-wider">
+          <a href="#learn" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-200 text-brand-black font-bold rounded-xl transition-all text-sm uppercase tracking-wider">
             START FROM BASICS <ArrowRight className="w-4 h-4" />
           </a>
         </div>
@@ -112,7 +110,7 @@ export function WhyMForex() {
     { title: "Structured Learning", desc: "Random information di jagah proper sequence.", icon: <ListOrdered /> },
     { title: "Practical Examples", desc: "Concepts nu charts naal samjho.", icon: <LineChart /> },
     { title: "Beginner Friendly", desc: "Zero knowledge ton start.", icon: <Compass /> },
-    { title: "Learning Resources", desc: "Practical PDFs te guides.", icon: <BookOpen /> },
+    { title: "Interactive Learning", desc: "Live chart examples te tests.", icon: <BookOpen /> },
     { title: "Community", desc: "WhatsApp + Telegram + Instagram naal connected learning.", icon: <Users /> }
   ];
 
