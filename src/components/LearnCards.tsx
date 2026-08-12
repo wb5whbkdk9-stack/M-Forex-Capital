@@ -40,7 +40,7 @@ export function LearnCards() {
     <section id="learn" className="py-24 bg-brand-dark border-t border-slate-800">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-6">Ki Sikhange?</h2>
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-6">What will you learn here</h2>
           <p className="text-lg text-slate-400">Complete curriculum beginners ton advanced tak.</p>
         </div>
 

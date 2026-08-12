@@ -48,20 +48,6 @@ async function startServer() {
         AI: "FOMO da matlab Fear Of Missing Out hai. Trading ch eh odon hunda jadon price already fast move kar chukki hove te trader nu lagda hai: 'Hun entry nahi layi ta opportunity miss ho ju.' Is karke oh apne planned setup ton bina late entry lai sakda hai. M Forex Capital framework: STOP -> CHECK SETUP -> CHECK ENTRY -> CHECK SL -> WAIT. Je setup valid nahi, trade force na karo. Trading Psychology Guide vich is baare hor detail ch sikh sakde ho."
       `;
 
-      // Convert history to format expected by SDK (if needed) or just start a chat
-      const chat = ai.chats.create({
-        model: "gemini-2.5-flash",
-        config: {
-          systemInstruction,
-          temperature: 0.7,
-        }
-      });
-
-      // If history exists, we might need to handle it. For simplicity, we just send the new message
-      // with context. Or we can use generateContent if chat management is complex on client.
-      // Let's just use a simple chat session approach without full history for now or let the client pass history if we used standard generateContent.
-      // Let's use standard generateContent with history injected.
-      
       let contents = [];
       if (history && Array.isArray(history)) {
         contents = history.map(msg => ({
@@ -73,18 +59,53 @@ async function startServer() {
       contents.push({ role: 'user', parts: [{ text: message }] });
 
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.6-flash",
         contents,
         config: {
-            systemInstruction
+            systemInstruction,
+            temperature: 0.7,
+            tools: [{ googleSearch: {} }]
         }
       });
 
       res.json({ text: response.text });
-
     } catch (error: any) {
       console.error("Chat API Error:", error);
       res.status(500).json({ error: "Internal server error." });
+    }
+  });
+  // Global Leaderboard API
+  let leaderboard: { name: string; xp: number; timestamp: string }[] = [];
+
+  app.get("/api/leaderboard", (req, res) => {
+    // Return top 100
+    const top = leaderboard.sort((a, b) => b.xp - a.xp).slice(0, 100);
+    res.json(top);
+  });
+
+  app.post("/api/leaderboard", (req, res) => {
+    try {
+      const { name, xp } = req.body;
+      if (!name || typeof xp !== 'number') {
+        return res.status(400).json({ error: "Invalid data" });
+      }
+      
+      // Update existing user or add new
+      const existingIdx = leaderboard.findIndex(entry => entry.name === name);
+      if (existingIdx >= 0) {
+        if (xp > leaderboard[existingIdx].xp) {
+          leaderboard[existingIdx].xp = xp;
+          leaderboard[existingIdx].timestamp = new Date().toISOString();
+        }
+      } else {
+        leaderboard.push({ name, xp, timestamp: new Date().toISOString() });
+      }
+      
+      const top = leaderboard.sort((a, b) => b.xp - a.xp).slice(0, 100);
+      res.json(top);
+    } catch (error) {
+      console.error("Leaderboard Error:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

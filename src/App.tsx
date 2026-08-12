@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from './components/Logo';
 import { AIChatbot } from './components/AIChatbot';
 import { CommunityModal } from './components/CommunityModal';
+import { LegalModal, LegalType } from './components/LegalModal';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { WhatYouWillLearn, LearningMethod, BeginnerSection, WhyMForex, AILearningPreview, CommunityCTA } from './components/HomeSections';
@@ -17,6 +18,9 @@ import { LearnCards } from './components/LearnCards';
 import { CandleLab } from './components/CandleLab';
 import { ChartChallenge } from './components/ChartChallenge';
 import { LiveMarket } from './components/LiveMarket';
+import { TradingViewSection } from './components/TradingViewSection';
+import { TradingLab } from './components/TradingLab/TradingLab';
+import { SimulatorApp } from './components/TradingSimulator/SimulatorApp';
 import { CommunitySection } from './components/CommunitySection';
 import { Roadmap } from './components/Roadmap';
 import { RiskCalculator } from './components/RiskCalculator';
@@ -32,6 +36,7 @@ import { Footer } from './components/Footer';
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
+  const [legalModalType, setLegalModalType] = useState<LegalType>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -83,6 +88,8 @@ export default function App() {
       
       <main>
         <Hero onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+        <TradingLab />
+        <SimulatorApp />
         <WhatYouWillLearn />
         <LearningMethod />
         <BeginnerSection />
@@ -92,6 +99,7 @@ export default function App() {
         <CandleLab />
         <ChartChallenge />
         <LiveMarket />
+        <TradingViewSection />
         
         <AILearningPreview />
         
@@ -106,13 +114,16 @@ export default function App() {
         <FAQ />
       </main>
 
-      <Footer />
+      <Footer onOpenLegal={(type) => setLegalModalType(type)} />
       
       <AIChatbot />
       
-      <AnimatePresence>
+            <AnimatePresence>
         {isCommunityModalOpen && (
           <CommunityModal onClose={() => setIsCommunityModalOpen(false)} />
+        )}
+        {legalModalType && (
+          <LegalModal type={legalModalType} onClose={() => setLegalModalType(null)} />
         )}
       </AnimatePresence>
     </div>

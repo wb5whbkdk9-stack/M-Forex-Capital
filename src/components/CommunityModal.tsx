@@ -17,16 +17,17 @@ export function CommunityModal({ onClose }: { onClose: () => void }) {
         initial={{ opacity: 0, y: 50, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-        className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-gold-500/20 bg-brand-dark p-6 shadow-2xl md:p-8"
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-gold-500/20 bg-brand-dark p-6 shadow-2xl md:p-8"
       >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-slate-400 hover:bg-slate-800/30 hover:text-white transition-colors"
+          className="absolute right-4 top-4 z-50 rounded-full p-2 text-slate-400 bg-brand-dark hover:bg-slate-800 border border-slate-700/50 hover:text-white transition-colors"
+          aria-label="Close modal"
         >
           <X className="h-6 w-6" />
         </button>
 
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center mt-6 md:mt-0">
           <div className="mx-auto mb-4 h-20 w-20">
             <Logo />
           </div>
@@ -97,10 +98,19 @@ export function CommunityModal({ onClose }: { onClose: () => void }) {
           </a>
         </div>
 
-        <p className="mt-8 text-center text-sm text-slate-400">
+        <p className="mt-8 text-center text-sm text-slate-400 hidden md:block">
           Best experience layi tusi tinno platforms te connect ho sakde ho.<br />
           <span className="mt-2 block text-gold-400">Already joined? Great — hun learning start karo.</span>
         </p>
+
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={onClose}
+            className="w-full md:w-auto px-8 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors flex items-center justify-center gap-2"
+          >
+            <X className="w-5 h-5" /> Back to Website
+          </button>
+        </div>
       </motion.div>
     </div>
   );

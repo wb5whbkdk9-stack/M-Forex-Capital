@@ -17,10 +17,12 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
 
   const navLinks = [
     { name: 'Home', href: '#' },
-    { name: 'Sade Baare', href: '#about' },
-    { name: 'Ki Sikhange?', href: '#learn' },
+    { name: 'What will you learn here', href: '#learn' },
     { name: 'Roadmap', href: '#roadmap' },
+    { name: 'Trading Lab', href: '#trading-lab' },
+    { name: 'Trading Simulator', href: '#simulator' },
     { name: 'Community', href: '#community' },
+    { name: 'About Us', href: '#about' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
   ];

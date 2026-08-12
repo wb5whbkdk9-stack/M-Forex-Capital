@@ -1,6 +1,8 @@
 import { Logo } from './Logo';
 
-export function Footer() {
+import { LegalType } from "./LegalModal";
+
+export function Footer({ onOpenLegal }: { onOpenLegal: (type: LegalType) => void }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -63,10 +65,10 @@ export function Footer() {
           
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>&copy; {currentYear} M Forex Capital. All rights reserved.</p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-              <a href="#" className="hover:text-white transition-colors">Risk Disclosure</a>
+            <div className="flex flex-wrap gap-4 justify-center md:justify-end">
+              <button onClick={(e) => { e.preventDefault(); onOpenLegal('privacy'); }} className="hover:text-white transition-colors uppercase tracking-wider font-medium">Privacy Policy</button>
+              <button onClick={(e) => { e.preventDefault(); onOpenLegal('terms'); }} className="hover:text-white transition-colors uppercase tracking-wider font-medium">Terms & Conditions</button>
+              <button onClick={(e) => { e.preventDefault(); onOpenLegal('risk'); }} className="hover:text-white transition-colors uppercase tracking-wider font-medium">Risk Disclosure</button>
             </div>
           </div>
         </div>

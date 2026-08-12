@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Plus, Save, Target, CheckCircle2, XCircle } from 'lucide-react';
+import { BookOpen, Plus, Save, Target, CheckCircle2, XCircle, Calendar } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface Trade {
   id: number;
@@ -13,16 +14,54 @@ interface Trade {
 
 export function TradingJournal() {
   const [trades, setTrades] = useState<Trade[]>([
-    {
-      id: 1,
-      date: '2024-03-10',
-      pair: 'EUR/USD',
-      setup: 'Support Bounce + Engulfing',
-      result: 'win',
-      notes: 'Waited for candle close. Good entry.'
-    }
+    { id: 10, date: '2024-04-05', pair: 'EUR/USD', setup: 'Support Bounce', result: 'win', notes: 'Clean setup, hit TP1.' },
+    { id: 9, date: '2024-04-02', pair: 'GBP/JPY', setup: 'Breakout', result: 'loss', notes: 'Fakeout, got stopped out early.' },
+    { id: 8, date: '2024-03-28', pair: 'XAU/USD', setup: 'Trendline', result: 'win', notes: 'Hit TP perfectly on news.' },
+    { id: 7, date: '2024-03-16', pair: 'GBP/JPY', setup: 'Breakout', result: 'loss', notes: 'Fakeout, got stopped out early.' },
+    { id: 6, date: '2024-03-15', pair: 'EUR/USD', setup: 'Support Bounce', result: 'win', notes: 'Good patience waiting for confirmation.' },
+    { id: 5, date: '2024-03-14', pair: 'XAU/USD', setup: 'Trendline', result: 'win', notes: 'Hit TP perfectly on news.' },
+    { id: 4, date: '2024-03-12', pair: 'GBP/USD', setup: 'Engulfing', result: 'loss', notes: 'Early entry, should have waited for close.' },
+    { id: 3, date: '2024-03-11', pair: 'EUR/USD', setup: 'Order Block', result: 'win', notes: 'Clean setup, no drawdown.' },
+    { id: 2, date: '2024-03-10', pair: 'USD/JPY', setup: 'Resistance Reject', result: 'loss', notes: 'News impact spiked me out.' },
+    { id: 1, date: '2024-02-28', pair: 'EUR/USD', setup: 'Support Bounce', result: 'win', notes: 'Waited for candle close. Good entry.' },
   ]);
+
+  const [dateFilter, setDateFilter] = useState('all');
   
+
+
+  const filteredTrades = useMemo(() => {
+    if (dateFilter === 'all') return trades;
+    
+    const now = new Date('2024-04-10'); // Mocking current date for sample data consistency
+    const filterDate = new Date('2024-04-10');
+    
+    if (dateFilter === '7days') {
+      filterDate.setDate(now.getDate() - 7);
+    } else if (dateFilter === '30days') {
+      filterDate.setDate(now.getDate() - 30);
+    } else if (dateFilter === 'march') {
+      return trades.filter(t => t.date.startsWith('2024-03'));
+    } else if (dateFilter === 'february') {
+      return trades.filter(t => t.date.startsWith('2024-02'));
+    }
+
+    return trades.filter(t => new Date(t.date) >= filterDate);
+  }, [trades, dateFilter]);
+
+  const chartData = useMemo(() => {
+    const sorted = [...filteredTrades].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    let cumulative = 0;
+    return sorted.map(t => {
+      cumulative += t.result === 'win' ? 2 : -1; // Assuming 1:2 average RR
+      return {
+        date: t.date,
+        performance: cumulative
+      };
+    });
+  }, [filteredTrades]);
+
+
   const [isAdding, setIsAdding] = useState(false);
   const [newTrade, setNewTrade] = useState<Partial<Trade>>({ result: 'win' });
 
@@ -68,9 +107,99 @@ export function TradingJournal() {
             </button>
           </div>
 
+
+          <div className="mb-12 glass-card p-6 md:p-8 rounded-3xl border border-slate-800">
+            <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-xl text-white tracking-wide">Performance Trends</h3>
+                <p className="text-sm text-slate-400">Cumulative performance assuming average 1:2 Risk-Reward ratio.</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <div className="flex items-center gap-2 bg-brand-black/50 border border-slate-700/50 rounded-lg px-3 py-1.5">
+                  <Calendar className="w-4 h-4 text-gold-400" />
+                  <select 
+                    className="bg-transparent text-sm text-white focus:outline-none cursor-pointer"
+                    value={dateFilter}
+                    onChange={(e) => setDateFilter(e.target.value)}
+                  >
+                    <option value="all">All Time</option>
+                    <option value="30days">Last 30 Days</option>
+                    <option value="7days">Last 7 Days</option>
+                    <option value="march">March 2024</option>
+                    <option value="february">February 2024</option>
+                  </select>
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-brand-green"></div>
+                    <span className="text-sm text-slate-300 font-medium">Wins (+2R)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-brand-red"></div>
+                    <span className="text-sm text-slate-300 font-medium">Losses (-1R)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="h-72 w-full relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={dateFilter}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorPerf" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#eab308" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#eab308" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#94a3b8" 
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(val) => new Date(val).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    dy={10}
+                  />
+                  <YAxis 
+                    stroke="#94a3b8" 
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(val) => `${val > 0 ? '+' : ''}${val}R`}
+                  />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.75rem', color: '#f8fafc' }}
+                    itemStyle={{ color: '#eab308', fontWeight: 'bold' }}
+                    formatter={(val: number) => [`${val > 0 ? '+' : ''}${val}R`, 'Net Performance']}
+                    labelFormatter={(label) => new Date(label).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="performance" 
+                    stroke="#eab308" 
+                    strokeWidth={3}
+                    fillOpacity={1} 
+                    fill="url(#colorPerf)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
           <AnimatePresence>
-            {isAdding && (
-              <motion.div
+            {isAdding && (              <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
@@ -121,7 +250,7 @@ export function TradingJournal() {
           </AnimatePresence>
 
           <div className="space-y-4">
-            {trades.map((trade) => (
+            {filteredTrades.map((trade) => (
               <motion.div 
                 key={trade.id}
                 initial={{ opacity: 0, y: 10 }}
