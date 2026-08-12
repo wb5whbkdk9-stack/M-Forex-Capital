@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /* Mapped from Gold to Blue (Sleek Interface Accent) */
+  --color-gold-300: #93c5fd;
+  --color-gold-400: #60a5fa;
+  --color-gold-500: #3b82f6;
+  --color-gold-600: #2563eb;
+  --color-gold-700: #1d4ed8;
+
+  /* Sleek Dark Palette */
+  --color-brand-black: #0B0F1A;
+  --color-brand-dark: #0f172a;
+  --color-brand-card: #1e293b;
+
+  /* Sleek Validation Palette */
+  --color-brand-green: #34d399;
+  --color-brand-red: #fb7185;
+
+  --font-display: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-body: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@layer base {
+  body {
+    @apply bg-brand-black text-slate-200 antialiased selection:bg-gold-500/30 selection:text-gold-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight text-white;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600;
+  }
+  
+  .border-gradient-gold {
+    border-image: linear-gradient(to right, #60a5fa, #3b82f6, #1d4ed8) 1;
+  }
+  
+  .glass-card {
+    @apply bg-brand-card/30 backdrop-blur-md border border-slate-700/50 shadow-sm;
+  }
+}
+
