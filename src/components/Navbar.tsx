@@ -40,7 +40,7 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
               <Logo />
             </div>
             <span className="font-display font-bold text-lg md:text-xl text-white tracking-wider hidden sm:block">
-              M FOREX
+              M FOREX CAPITAL
             </span>
           </a>
 
