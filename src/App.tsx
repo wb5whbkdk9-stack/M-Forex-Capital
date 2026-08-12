@@ -88,20 +88,23 @@ export default function App() {
       
       <main>
         <Hero onOpenCommunity={() => setIsCommunityModalOpen(true)} />
-        <TradingLab />
-        <SimulatorApp />
         <WhatYouWillLearn />
         <LearningMethod />
         <BeginnerSection />
         <WhyMForex />
+        <WhyConfused />
+        <Roadmap />
+        <LearnCards />
+        <AILearningPreview />
+        
+        <TradingLab />
+        <SimulatorApp />
         
         {/* We keep old components here as well so we don't 'rebuild from scratch' entirely */}
         <CandleLab />
         <ChartChallenge />
         <LiveMarket />
         <TradingViewSection />
-        
-        <AILearningPreview />
         
         
         <CommunityCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
@@ -111,7 +114,10 @@ export default function App() {
         <DailyLearning />
         <Glossary />
         <Contact />
+        <About />
         <FAQ />
+        <SocialProof />
+        <FinalCTA />
       </main>
 
       <Footer onOpenLegal={(type) => setLegalModalType(type)} />
