@@ -8,6 +8,7 @@ import { Logo } from './components/Logo';
 import { AIChatbot } from './components/AIChatbot';
 import { CommunityModal } from './components/CommunityModal';
 import { LegalModal, LegalType } from './components/LegalModal';
+import { ResourceModal, GuideType } from './components/ResourceModal';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { WhatYouWillLearn, LearningMethod, BeginnerSection, WhyMForex, AILearningPreview, CommunityCTA } from './components/HomeSections';
@@ -37,6 +38,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<LegalType>(null);
+  const [activeGuide, setActiveGuide] = useState<GuideType>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -84,7 +86,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-brand-black text-slate-200 selection:bg-gold-500/30 font-body overflow-x-hidden">
-      <Navbar onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+      <Navbar 
+        onOpenCommunity={() => setIsCommunityModalOpen(true)} 
+        onOpenGuide={(guide) => setActiveGuide(guide as GuideType)}
+      />
       
       <main>
         <Hero onOpenCommunity={() => setIsCommunityModalOpen(true)} />
@@ -117,7 +122,7 @@ export default function App() {
         <About />
         <FAQ />
         <SocialProof />
-        <FinalCTA />
+        <FinalCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
       </main>
 
       <Footer onOpenLegal={(type) => setLegalModalType(type)} />
@@ -130,6 +135,16 @@ export default function App() {
         )}
         {legalModalType && (
           <LegalModal type={legalModalType} onClose={() => setLegalModalType(null)} />
+        )}
+        {activeGuide && (
+          <ResourceModal 
+            guide={activeGuide} 
+            onClose={() => setActiveGuide(null)} 
+            onOpenCommunity={() => {
+              setActiveGuide(null);
+              setIsCommunityModalOpen(true);
+            }} 
+          />
         )}
       </AnimatePresence>
     </div>

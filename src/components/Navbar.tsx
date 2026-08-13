@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Instagram } from 'lucide-react';
 import { Logo } from './Logo';
+import { Ticker } from './Ticker';
 
-export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
+export function Navbar({ onOpenCommunity, onOpenGuide }: { onOpenCommunity: () => void, onOpenGuide?: (type: string) => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -17,10 +18,12 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
 
   const navLinks = [
     { name: 'Home', href: '#' },
-    { name: 'What will you learn here', href: '#learn' },
-    { name: 'Roadmap', href: '#roadmap' },
+    { name: 'What You Will Learn', href: '#learn' },
     { name: 'Trading Lab', href: '#trading-lab' },
     { name: 'Trading Simulator', href: '#simulator' },
+    { name: 'Candlestick Guide', action: 'candlestick' },
+    { name: 'Trading Psychology', action: 'psychology' },
+    { name: 'Trading Playbook', action: 'playbook' },
     { name: 'Community', href: '#community' },
     { name: 'About Us', href: '#about' },
     { name: 'FAQ', href: '#faq' },
@@ -28,11 +31,13 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-brand-black/90 backdrop-blur-md shadow-lg shadow-black/50 py-3' : 'bg-transparent py-5'
-      }`}
-    >
+    <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+      <Ticker onOpenGuide={onOpenGuide} />
+      <header
+        className={`transition-all duration-300 ${
+          isScrolled ? 'bg-brand-black/90 backdrop-blur-md shadow-lg shadow-black/50 py-3' : 'bg-transparent py-5'
+        }`}
+      >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Left: Logo */}
@@ -47,15 +52,28 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
 
           {/* Center: Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              if (link.action) {
+                return (
+                  <button
+                    key={link.name}
+                    onClick={() => onOpenGuide?.(link.action)}
+                    className="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors"
+                  >
+                    {link.name}
+                  </button>
+                );
+              }
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-sm font-medium text-slate-300 hover:text-gold-400 transition-colors"
+                >
+                  {link.name}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right: Desktop CTA & Socials */}
@@ -95,16 +113,32 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
           >
             <div className="flex flex-col px-6 py-8 gap-6 max-h-[80vh] overflow-y-auto">
               <div className="flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-medium text-slate-300 hover:text-gold-400"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  if (link.action) {
+                    return (
+                      <button
+                        key={link.name}
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          onOpenGuide?.(link.action);
+                        }}
+                        className="text-lg font-medium text-left text-slate-300 hover:text-gold-400"
+                      >
+                        {link.name}
+                      </button>
+                    );
+                  }
+                  return (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-lg font-medium text-slate-300 hover:text-gold-400"
+                    >
+                      {link.name}
+                    </a>
+                  );
+                })}
               </div>
               
               <div className="h-px w-full bg-slate-800/50" />
@@ -134,5 +168,6 @@ export function Navbar({ onOpenCommunity }: { onOpenCommunity: () => void }) {
         )}
       </AnimatePresence>
     </header>
+    </div>
   );
 }

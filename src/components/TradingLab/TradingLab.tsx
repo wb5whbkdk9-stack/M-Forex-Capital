@@ -39,9 +39,18 @@ export function TradingLab() {
 
   const ActiveComponent = MODULES.find(m => m.id === activeModule)?.component;
 
+  // Add scroll to top effect when activeModule changes
+  React.useEffect(() => {
+    const el = document.getElementById('trading-lab');
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, [activeModule]);
+
   if (activeModule && ActiveComponent) {
     return (
-      <div className="bg-brand-black min-h-screen pt-24 pb-16">
+      <div id="trading-lab" className="bg-brand-black min-h-[1200px] pt-24 pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <button 
             onClick={() => setActiveModule(null)}
@@ -49,7 +58,7 @@ export function TradingLab() {
           >
             <ArrowLeft className="w-4 h-4" /> Back to Lab Dashboard
           </button>
-          <ActiveComponent onComplete={() => {}} />
+          <ActiveComponent onComplete={() => setActiveModule(null)} />
         </div>
       </div>
     );

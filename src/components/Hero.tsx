@@ -4,7 +4,7 @@ import { Logo } from './Logo';
 
 export function Hero({ onOpenCommunity }: { onOpenCommunity: () => void }) {
   return (
-    <section className="relative min-h-[90svh] pt-24 pb-12 flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90svh] pt-32 md:pt-40 pb-12 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
         <motion.div 

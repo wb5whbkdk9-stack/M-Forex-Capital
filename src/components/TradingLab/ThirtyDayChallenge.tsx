@@ -52,6 +52,11 @@ export function ThirtyDayChallenge({ onComplete }: { onComplete: () => void }) {
         })}
       </div>
 
+      <div className="mt-12 text-center">
+        <button onClick={onComplete} className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition-colors">
+          Back to Lab Dashboard
+        </button>
+      </div>
       <AnimatePresence>
         {selectedDay && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
