@@ -43,9 +43,9 @@ export function FinalCTA({ onOpenCommunity }: { onOpenCommunity: () => void }) {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-slate-800">
-            <a href="tel:+917978986978" className="flex items-center gap-2 text-slate-400 hover:text-gold-400 transition-colors">
+            <a href="tel:+917973986978" className="flex items-center gap-2 text-slate-400 hover:text-gold-400 transition-colors">
               <Phone className="w-5 h-5" />
-              <span className="font-medium">+91 7978986978</span>
+              <span className="font-medium">+91 7973986978</span>
             </a>
             <a href="https://instagram.com/m.forex.capital" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-400 hover:text-gold-400 transition-colors">
               <Instagram className="w-5 h-5" />

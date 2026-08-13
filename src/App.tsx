@@ -20,6 +20,7 @@ import { CandleLab } from './components/CandleLab';
 import { ChartChallenge } from './components/ChartChallenge';
 import { LiveMarket } from './components/LiveMarket';
 import { TradingViewSection } from './components/TradingViewSection';
+import { ForexNews } from './components/ForexNews';
 import { TradingLab } from './components/TradingLab/TradingLab';
 import { SimulatorApp } from './components/TradingSimulator/SimulatorApp';
 import { CommunitySection } from './components/CommunitySection';
@@ -110,7 +111,7 @@ export default function App() {
         <ChartChallenge />
         <LiveMarket />
         <TradingViewSection />
-        
+        <ForexNews />
         
         <CommunityCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
         

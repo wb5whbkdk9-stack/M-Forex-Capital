@@ -25,13 +25,13 @@ export function Contact() {
             <div className="bg-brand-card p-8 rounded-3xl border border-slate-800">
               <h3 className="text-xl font-bold text-white mb-6">Direct Contact</h3>
               <div className="space-y-6">
-                <a href="tel:+917978986978" className="flex items-center gap-4 text-slate-300 hover:text-gold-400 transition-colors group">
+                <a href="tel:+917973986978" className="flex items-center gap-4 text-slate-300 hover:text-gold-400 transition-colors group">
                   <div className="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center border border-slate-800 group-hover:border-gold-500/50">
                     <Phone className="w-5 h-5 text-gold-500" />
                   </div>
                   <div>
                     <div className="text-sm text-slate-500 font-medium mb-1">Phone / WhatsApp</div>
-                    <div className="font-bold text-lg">+91 7978986978</div>
+                    <div className="font-bold text-lg">+91 7973986978</div>
                   </div>
                 </a>
                 

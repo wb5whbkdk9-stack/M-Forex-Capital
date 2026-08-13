@@ -49,7 +49,7 @@ export function Footer({ onOpenLegal }: { onOpenLegal: (type: LegalType) => void
             <h4 className="text-white font-bold mb-6 tracking-wider">CONTACT</h4>
             <ul className="space-y-3 text-sm text-slate-400">
               <li>
-                <a href="tel:+917978986978" className="hover:text-gold-400 transition-colors">+91 7978986978</a>
+                <a href="tel:+917973986978" className="hover:text-gold-400 transition-colors">+91 7973986978</a>
               </li>
               <li>
                 <a href="https://instagram.com/m.forex.capital" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400 transition-colors">@m.forex.capital</a>

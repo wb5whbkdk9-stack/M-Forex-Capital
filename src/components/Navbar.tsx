@@ -78,7 +78,7 @@ export function Navbar({ onOpenCommunity, onOpenGuide }: { onOpenCommunity: () =
 
           {/* Right: Desktop CTA & Socials */}
           <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:+917978986978" className="text-slate-300 hover:text-gold-400 transition-colors" title="+91 7978986978">
+            <a href="tel:+917973986978" className="text-slate-300 hover:text-gold-400 transition-colors" title="+91 7973986978">
               <Phone className="h-5 w-5" />
             </a>
             <a href="https://instagram.com/m.forex.capital" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-gold-400 transition-colors" title="@m.forex.capital">
@@ -144,9 +144,9 @@ export function Navbar({ onOpenCommunity, onOpenGuide }: { onOpenCommunity: () =
               <div className="h-px w-full bg-slate-800/50" />
               
               <div className="flex items-center gap-6">
-                <a href="tel:+917978986978" className="flex items-center gap-2 text-slate-300">
+                <a href="tel:+917973986978" className="flex items-center gap-2 text-slate-300">
                   <Phone className="h-5 w-5 text-gold-500" />
-                  <span>+91 7978986978</span>
+                  <span>+91 7973986978</span>
                 </a>
                 <a href="https://instagram.com/m.forex.capital" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300">
                   <Instagram className="h-5 w-5 text-gold-500" />
