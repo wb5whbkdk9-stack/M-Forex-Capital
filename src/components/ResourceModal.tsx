@@ -59,7 +59,7 @@ export function ResourceModal({ guide, onClose, onOpenCommunity }: ResourceModal
 
           <div className="p-6 bg-brand-black border border-slate-800 rounded-xl text-center">
             <h3 className="text-white font-bold mb-2">Ready to master this?</h3>
-            <p className="text-slate-400 text-sm mb-6">Jyada sikhan lyi join karo M Forex Capital Community.</p>
+            <p className="text-slate-400 text-sm mb-6">Jyada sikhan lyi join karo M Forex Capital Community, ya menu ch Live Classes & Course details check karo.</p>
             
             <button
               onClick={onOpenCommunity}

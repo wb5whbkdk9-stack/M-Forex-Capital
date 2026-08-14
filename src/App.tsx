@@ -34,12 +34,31 @@ import { SocialProof } from './components/SocialProof';
 import { FAQ } from './components/FAQ';
 import { FinalCTA } from './components/FinalCTA';
 import { Footer } from './components/Footer';
+import { LiveClassesCourse } from './components/LiveClassesCourse';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<LegalType>(null);
   const [activeGuide, setActiveGuide] = useState<GuideType>(null);
+  const [currentRoute, setCurrentRoute] = useState(window.location.hash === '#live-classes' ? 'live-classes' : 'home');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#live-classes') {
+        setCurrentRoute('live-classes');
+        window.scrollTo(0, 0);
+      } else {
+        // Only change to home if we are navigating away from live-classes
+        // This keeps section hashes like #learn or #simulator working
+        if (currentRoute === 'live-classes') {
+           setCurrentRoute('home');
+        }
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [currentRoute]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -93,37 +112,46 @@ export default function App() {
       />
       
       <main>
-        <Hero onOpenCommunity={() => setIsCommunityModalOpen(true)} />
-        <WhatYouWillLearn />
-        <LearningMethod />
-        <BeginnerSection />
-        <WhyMForex />
-        <WhyConfused />
-        <Roadmap />
-        <LearnCards />
-        <AILearningPreview />
-        
-        <TradingLab />
-        <SimulatorApp />
-        
-        {/* We keep old components here as well so we don't 'rebuild from scratch' entirely */}
-        <CandleLab />
-        <ChartChallenge />
-        <LiveMarket />
-        <TradingViewSection />
-        <ForexNews />
-        
-        <CommunityCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
-        
-        <RiskCalculator />
-        <TradingJournal />
-        <DailyLearning />
-        <Glossary />
-        <Contact />
-        <About />
-        <FAQ />
-        <SocialProof />
-        <FinalCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+        {currentRoute === 'live-classes' ? (
+          <LiveClassesCourse 
+            onOpenCommunity={() => setIsCommunityModalOpen(true)}
+            onOpenGuide={(guide) => setActiveGuide(guide as GuideType)}
+          />
+        ) : (
+          <>
+            <Hero onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+            <WhatYouWillLearn />
+            <LearningMethod />
+            <BeginnerSection />
+            <WhyMForex />
+            <WhyConfused />
+            <Roadmap />
+            <LearnCards />
+            <AILearningPreview />
+            
+            <TradingLab />
+            <SimulatorApp />
+            
+            {/* We keep old components here as well so we don't 'rebuild from scratch' entirely */}
+            <CandleLab />
+            <ChartChallenge />
+            <LiveMarket />
+            <TradingViewSection />
+            <ForexNews />
+            
+            <CommunityCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+            
+            <RiskCalculator />
+            <TradingJournal />
+            <DailyLearning />
+            <Glossary />
+            <Contact />
+            <About />
+            <FAQ />
+            <SocialProof />
+            <FinalCTA onOpenCommunity={() => setIsCommunityModalOpen(true)} />
+          </>
+        )}
       </main>
 
       <Footer onOpenLegal={(type) => setLegalModalType(type)} />

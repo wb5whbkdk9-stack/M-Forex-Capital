@@ -19,8 +19,7 @@ export function Navbar({ onOpenCommunity, onOpenGuide }: { onOpenCommunity: () =
   const navLinks = [
     { name: 'Home', href: '#' },
     { name: 'What You Will Learn', href: '#learn' },
-    { name: 'Trading Lab', href: '#trading-lab' },
-    { name: 'Trading Simulator', href: '#simulator' },
+    { name: 'Live Classes & Course', href: '#live-classes' },
     { name: 'Candlestick Guide', action: 'candlestick' },
     { name: 'Trading Psychology', action: 'psychology' },
     { name: 'Trading Playbook', action: 'playbook' },
